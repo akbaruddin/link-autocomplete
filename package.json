@@ -1,6 +1,6 @@
 {
-  "name": "@editorjs/link-autocomplete-gql",
-  "version": "0.0.0",
+  "name": "link-autocomplete-gql",
+  "version": "0.2.0",
   "description": "Link Autocomplete Inline Tool for EditorJS with graphql",
   "main": "dist/link-autocomplete.js",
   "repository": "https://github.com/akbaruddin/link-autocomplete.git",
