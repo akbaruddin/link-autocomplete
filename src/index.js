@@ -298,40 +298,35 @@ export default class LinkAutocomplete {
      * @type {HTMLDivElement}
      */
     this.nodes.inputWrapper = Dom.make("div", LinkAutocomplete.CSS.field);
+    this.nodes.inputWrapper = Dom.make("div", [LinkAutocomplete.CSS.field]);
     this.nodes.inputFieldPaste = Dom.make(
       "input",
-      LinkAutocomplete.CSS.fieldInput,
+      [ LinkAutocomplete.CSS.fieldInput ],
       {
-        placeholder: this.api.i18n.t(
-          this.isServerEnabled ? DICTIONARY.pasteText : DICTIONARY.pasteALink
-        ),
+        placeholder: DICTIONARY.pasteText,
       }
     );
-    this.nodes.Breaker = Dom.make("span", LinkAutocomplete.CSS.breaker, {
-      innerHTML: this.api.i18n.t(
-        this.isServerEnabled ? "or" : DICTIONARY.pasteALink
-      ),
+    this.nodes.Breaker = Dom.make('span', [LinkAutocomplete.CSS.breaker], {
+      innerHTML: 'or',
     });
 
     this.nodes.inputField = Dom.make(
-      "input",
-      LinkAutocomplete.CSS.fieldInputNone,
+      'input',
+      [LinkAutocomplete.CSS.fieldInputNone],
       {
-        placeholder: this.api.i18n.t(
-          this.isServerEnabled
-            ? DICTIONARY.pasteOrSearch
-            : DICTIONARY.pasteALink
-        ),
+        placeholder: DICTIONARY.pasteOrSearch,
       }
     );
 
-    this.nodes.searchIcon = Dom.make("span", LinkAutocomplete.CSS.iconSearch, {
+    this.nodes.searchIcon = Dom.make("span", [LinkAutocomplete.CSS.iconSearch], {
       innerHTML: require("../icons/searchIcon.svg"),
     });
 
     this.nodes.inputContainer = Dom.make(
       "div",
-      LinkAutocomplete.CSS.fieldWrapper
+      [
+        LinkAutocomplete.CSS.fieldWrapper,
+      ]
     );
     this.nodes.inputContainer.appendChild(this.nodes.searchIcon);
     this.nodes.inputContainer.appendChild(this.nodes.inputField);
@@ -346,7 +341,9 @@ export default class LinkAutocomplete {
      *
      * @type {HTMLDivElement}
      */
-    this.nodes.searchResults = Dom.make("div", LinkAutocomplete.CSS.foundItems);
+    this.nodes.searchResults = Dom.make("div", [
+      LinkAutocomplete.CSS.foundItems,
+    ]);
     /**
      * To improve UX we need to remove any 'selected' classes from search results
      */
@@ -410,29 +407,29 @@ export default class LinkAutocomplete {
      */
     this.nodes.linkDataWrapper = Dom.make(
       "div",
-      LinkAutocomplete.CSS.linkDataWrapper
+      [ LinkAutocomplete.CSS.linkDataWrapper ]
     );
     this.toggleVisibility(this.nodes.linkDataWrapper, false);
 
     this.nodes.linkDataTitleWrapper = Dom.make(
       "div",
-      LinkAutocomplete.CSS.linkDataTitleWrapper
+      [ LinkAutocomplete.CSS.linkDataTitleWrapper ]
     );
     this.nodes.linkDataWrapper.appendChild(this.nodes.linkDataTitleWrapper);
     this.toggleVisibility(this.nodes.linkDataTitleWrapper, false);
 
     this.nodes.linkDataName = Dom.make(
       "div",
-      LinkAutocomplete.CSS.linkDataName
+      [ LinkAutocomplete.CSS.linkDataName ]
     );
     this.nodes.linkDataTitleWrapper.appendChild(this.nodes.linkDataName);
     this.nodes.linkDataDescription = Dom.make(
       "div",
-      LinkAutocomplete.CSS.linkDataDescription
+      [ LinkAutocomplete.CSS.linkDataDescription ]
     );
     this.nodes.linkDataTitleWrapper.appendChild(this.nodes.linkDataDescription);
 
-    this.nodes.linkDataURL = Dom.make("A", LinkAutocomplete.CSS.linkDataURL);
+    this.nodes.linkDataURL = Dom.make("A", [ LinkAutocomplete.CSS.linkDataURL ]);
     this.nodes.linkDataWrapper.appendChild(this.nodes.linkDataURL);
 
     /**
@@ -964,6 +961,9 @@ export default class LinkAutocomplete {
      */
     this.selection.collapseToEnd();
     this.api.inlineToolbar.close();
+    this.nodes.inputField.value = '';
+    this.toggleVisibility(this.nodes.actionsWrapper, false);
+    this.clearSearchList();
   }
 
   /**
@@ -1231,5 +1231,8 @@ export default class LinkAutocomplete {
       // and recover new selection after removing fake background
       currentSelection.restore();
     }
+    this.nodes.inputField.value = '';
+    this.toggleVisibility(this.nodes.actionsWrapper, false);
+    this.clearSearchList();
   }
 }
