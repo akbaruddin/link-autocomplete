@@ -1,10 +1,10 @@
 {
-  "name": "@editorjs/link-autocomplete",
+  "name": "@editorjs/link-autocomplete-gql",
   "version": "0.0.0",
-  "description": "Link Autocomplete Inline Tool for EditorJS",
+  "description": "Link Autocomplete Inline Tool for EditorJS with graphql",
   "main": "dist/link-autocomplete.js",
-  "repository": "https://github.com/editor-js/link-autocomplete.git",
-  "author": "CodeX <team@codex.so>",
+  "repository": "https://github.com/akbaruddin/link-autocomplete.git",
+  "author": "akbaruddin <akbaruddin@live.in>",
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
