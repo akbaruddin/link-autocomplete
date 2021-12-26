@@ -99,6 +99,8 @@
             endpoint: 'http://localhost:3000/',
             graphQL: true,
             graphQLQuery: ``,
+            graphQLVariables: (search) => ({  }),
+            graphQLItems: (data) => data,
             queryParam: 'search'
           }
         }

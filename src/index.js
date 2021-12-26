@@ -149,8 +149,18 @@ export default class LinkAutocomplete {
      * Config params
      */
     this.searchEndpointUrl = this.config.endpoint;
-    this.graphQL = this.config.graphQL;
-    this.graphQLQuery = this.config.graphQLQuery;
+    this.graphQL = this.config.graphQL || false;
+    this.graphQLQuery = this.config.graphQLQuery || ``;
+    this.graphQLVariables =
+      this.config.graphQLVariables ||
+      function (value) {
+        return { value };
+      };
+    this.graphQLItems =
+      this.config.graphQLItems ||
+      function (data) {
+        return data;
+      };
     this.searchQueryParam = this.config.queryParam;
 
     /**
@@ -573,12 +583,21 @@ export default class LinkAutocomplete {
        */
       this.toggleLoadingState(true);
       try {
-        const searchDataItems = await this.searchRequest(searchString);
+        if (this.graphQL) {
+          const searchDataItems = await this.searchRequestGQL(searchString);
 
-        /**
-         * Generate list
-         */
-        this.generateSearchList(searchDataItems);
+          /**
+           * Generate list
+           */
+          this.generateSearchList(searchDataItems);
+        } else {
+          const searchDataItems = await this.searchRequest(searchString);
+
+          /**
+           * Generate list
+           */
+          this.generateSearchList(searchDataItems);
+        }
       } catch (e) {
         notifier.show({
           message: `${DICTIONARY.searchRequestError} "${e.message}"`,
@@ -1120,6 +1139,53 @@ export default class LinkAutocomplete {
 
       if (searchResponse && searchResponse.success) {
         return searchResponse.items;
+      } else {
+        console.warn(
+          'Link Autocomplete: invalid response format: "success: true" expected, but got %o. Response: %o',
+          searchResponse.success,
+          searchResponse
+        );
+      }
+    } catch (e) {
+      notifier.show({
+        message: `${DICTIONARY.searchRequestError} "${e.message}"`,
+        style: "error",
+      });
+    }
+
+    return [];
+  }
+
+  /**
+   * Send search request
+   *
+   * @param {string} searchString - search string input
+   *
+   * @returns {Promise<SearchItemData[]>}
+   */
+  async searchRequestGQL(searchString) {
+    try {
+      /**
+       * Get raw search data
+       */
+      const searchResponseRaw = await fetch(`${this.searchEndpointUrl}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: this.graphQLQuery,
+          variables: this.graphQLVariables,
+        }),
+      });
+
+      /**
+       * Get JSON decoded data
+       */
+      const searchResponse = await searchResponseRaw.json();
+
+      if (searchResponse && searchResponse.success) {
+        return this.graphQLItems(searchResponse);
       } else {
         console.warn(
           'Link Autocomplete: invalid response format: "success: true" expected, but got %o. Response: %o',
