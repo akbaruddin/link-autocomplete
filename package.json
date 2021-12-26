@@ -1,10 +1,10 @@
 {
   "name": "link-autocomplete-gql",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Link Autocomplete Inline Tool for EditorJS with graphql",
   "main": "dist/link-autocomplete.js",
   "repository": "https://github.com/akbaruddin/link-autocomplete.git",
-  "author": "akbaruddin <akbaruddin@live.in>",
+  "author": "akbaruddin",
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
