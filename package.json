@@ -1,6 +1,6 @@
 {
   "name": "link-autocomplete-gql",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "Link Autocomplete Inline Tool for EditorJS with graphql",
   "main": "dist/link-autocomplete.js",
   "repository": "https://github.com/akbaruddin/link-autocomplete.git",
@@ -11,9 +11,6 @@
     "build:dev": "webpack --mode development --watch",
     "lint:fix": "eslint src/ --ext .js --fix",
     "server": "nodemon example/server.js"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "codex-notifier": "^1.1.2",
