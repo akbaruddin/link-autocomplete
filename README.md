@@ -11,11 +11,11 @@ An upgraded version of base inline link tool with your server's search.
 Get the package
 
 ```shell
-npm i --save-dev @editorjs/link-autocomplete
+npm i --save link-autocomplete-gql
 ```
 
 ```shell
-yarn add -D @editorjs/link-autocomplete
+yarn add link-autocomplete-gql
 ```
 
 ### Load from CDN
@@ -23,7 +23,7 @@ yarn add -D @editorjs/link-autocomplete
 You can use package from jsDelivr CDN.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@editorjs/link-autocomplete"></script>
+<script src="https://cdn.jsdelivr.net/npm/link-autocomplete-gql/dist/link-autocomplete.js"></script>
 ```
 
 ## Usage
@@ -42,7 +42,10 @@ var editor = EditorJS({
       class: LinkAutocomplete,
       config: {
         endpoint: 'http://localhost:3000/',
-        queryParam: 'search'
+        graphQL: true,
+        graphQLQuery: `query() {}`,
+        graphQLVariables: (search) => ({  }),
+        graphQLItems: (data) => data
       }
     }
   },
