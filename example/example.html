@@ -96,12 +96,11 @@
         link: {
           class: LinkAutocomplete,
           config: {
-            endpoint: 'http://localhost:3000/',
+            endpoint: 'http://localhost:4000/graphql',
             graphQL: true,
-            graphQLQuery: ``,
-            graphQLVariables: (search) => ({  }),
-            graphQLItems: (data) => data,
-            queryParam: 'search'
+            graphQLQuery: `query Search($searchString: String){ search(searchString: $searchString) { id name href description } }`,
+            graphQLVariables: (search) => ({ searchString: search }),
+            graphQLItems: ({ data }) => data.search
           }
         }
       },

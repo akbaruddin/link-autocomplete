@@ -1137,12 +1137,11 @@ export default class LinkAutocomplete {
        */
       const searchResponse = await searchResponseRaw.json();
 
-      if (searchResponse && searchResponse.success) {
+      if (searchResponse) {
         return searchResponse.items;
       } else {
         console.warn(
           'Link Autocomplete: invalid response format: "success: true" expected, but got %o. Response: %o',
-          searchResponse.success,
           searchResponse
         );
       }
@@ -1184,12 +1183,11 @@ export default class LinkAutocomplete {
        */
       const searchResponse = await searchResponseRaw.json();
 
-      if (searchResponse && searchResponse.success) {
+      if (searchResponse) {
         return this.graphQLItems(searchResponse);
       } else {
         console.warn(
           'Link Autocomplete: invalid response format: "success: true" expected, but got %o. Response: %o',
-          searchResponse.success,
           searchResponse
         );
       }

@@ -2,7 +2,7 @@
 
 An upgraded version of base inline link tool with your server's search.
 
-![](example/assets/example.png)
+![sample](example/assets/example.png)
 
 ## Installation
 
@@ -41,11 +41,11 @@ var editor = EditorJS({
     link: {
       class: LinkAutocomplete,
       config: {
-        endpoint: 'http://localhost:3000/',
+        endpoint: 'http://localhost:4000/graphql',
         graphQL: true,
-        graphQLQuery: `query() {}`,
-        graphQLVariables: (search) => ({  }),
-        graphQLItems: (data) => data
+        graphQLQuery: `query Search($searchString: String){ search(searchString: $searchString) { id name href description } }`,
+        graphQLVariables: (search) => ({ searchString: search }),
+        graphQLItems: ({ data }) => data.search
       }
     }
   },
@@ -78,7 +78,6 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "success": true,
   "items": [
     {
       "href": "https://codex.so/editor",
@@ -113,40 +112,8 @@ Additional data will be store in element's dataset: `data-name`, `data-descripti
 
 By default, shortcut `CMD (CTRL) + K` is used for pasting links as usual.
 
-## I18n
-
-There is a few phrases to be translated. 
-
-UI items:
-
-- `Paste or search` — placeholder for an input field if server endpoint passed.
-- `Paste a link` — placeholder for the same field if server endpoint is missing.
-
-Error messages:
-
-- `Cannot process search request because of` — message before error's text in notification for a bad server response.
-- `Server responded with invalid data` — bad server's response
-- `Link URL is invalid` — pasted link url is bad 
-
-```
-i18n: {
-  messages: {
-    tools: {
-      LinkAutocomplete: {
-        'Paste or search': '...',
-        'Paste a link': '...',
-        'Cannot process search request because of': '...',
-        'Server responded with invalid data': '...',
-        'Link URL is invalid': '...'
-      }
-    }
-  }
-},
-```
-
-# Support maintenance 🎖
+## Support maintenance 🎖
 
 If you're using this tool and editor.js in your business, please consider supporting their maintenance and evolution.
 
 [http://opencollective.com/editorjs](http://opencollective.com/editorjs)
-
